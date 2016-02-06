@@ -1,0 +1,27 @@
+//package msg;
+
+option java_package = "io.greenbus.msg.compiler.proto";
+option java_outer_classname = "CompilerExtensions";
+option java_generic_services = false;
+
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.FieldOptions {
+  optional bool field_optional = 50002;
+}
+
+enum ServiceAddressing {
+  NEVER = 1;
+  OPTIONALLY = 2;
+  ALWAYS = 3;
+}
+
+extend google.protobuf.MethodOptions {
+  optional ServiceAddressing addressed = 50006;
+  optional string subscription_type = 50007;
+}
+
+extend google.protobuf.ServiceOptions {
+  optional string scala_package = 50011;
+  optional string java_package = 50012;
+}
