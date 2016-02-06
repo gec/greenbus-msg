@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.greenbus.msg</groupId>
     <artifactId>greenbus-msg-proto-ext</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <parent>
         <groupId>io.greenbus.msg</groupId>
         <artifactId>greenbus-msg-scala-base</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
         <relativePath>../scala-base</relativePath>
     </parent>
 
