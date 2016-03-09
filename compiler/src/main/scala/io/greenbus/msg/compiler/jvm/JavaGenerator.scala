@@ -67,7 +67,7 @@ object JavaGenerator extends JvmGenerator {
     }
   }
 
-  def renderServiceFile(servicePackage: String, serviceName: String, signatures: Seq[String], definitions: Seq[(CodeWriter) => Unit], descriptors: Seq[CodeWriter => Unit]): (CodeWriter) => Unit = {
+  def renderServiceFile(servicePackage: String, serviceName: String, methodNames: Seq[String], signatures: Seq[String], definitions: Seq[(CodeWriter) => Unit], descriptors: Seq[CodeWriter => Unit]): (CodeWriter) => Unit = {
     implicit w: CodeWriter => {
       0 << s"package $servicePackage;"
       0 << ""
@@ -115,7 +115,7 @@ object JavaGenerator extends JvmGenerator {
     }
   }
 
-  def renderRequestDescriptor(methodName: String, requestId: String, requestType: String, responseType: String): CodeWriter => Unit = {
+  def renderRequestDescriptor(methodName: String, requestId: String, uriPath: Seq[String], subscribable: Boolean, addressRequired: Boolean, requestType: String, responseType: String): CodeWriter => Unit = {
     { implicit w: CodeWriter =>
       0 << s"public static class ${methodName.capitalize} implements RequestDescriptor<$requestType, $responseType> {"
       1 <<  "public String getRequestId() {"

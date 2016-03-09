@@ -14,5 +14,13 @@
         <relativePath>../scala-base</relativePath>
     </parent>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf-java.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>
 

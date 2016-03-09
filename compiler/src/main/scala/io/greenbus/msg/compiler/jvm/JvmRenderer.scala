@@ -42,9 +42,9 @@ trait JvmRenderer {
 
   def langType(field: FieldDescriptorProto, map: Map[String, Message]): String
 
-  def renderServiceFile(servicePackage: String, serviceName: String, signatures: Seq[String], definitions: Seq[CodeWriter => Unit], descriptors: Seq[CodeWriter => Unit]): CodeWriter => Unit
+  def renderServiceFile(servicePackage: String, serviceName: String, methodNames: Seq[String], signatures: Seq[String], definitions: Seq[CodeWriter => Unit], descriptors: Seq[CodeWriter => Unit]): CodeWriter => Unit
 
-  def renderRequestDescriptor(methodName: String, requestId: String, requestType: String, responseType: String): CodeWriter => Unit
+  def renderRequestDescriptor(methodName: String, requestId: String, uriPath: Seq[String], subscribable: Boolean, addressRequired: Boolean, requestType: String, responseType: String): CodeWriter => Unit
   def renderRequestSignature(methodName: String, argList: Seq[String], addressed: Boolean, headers: Boolean, retType: String): String
   def renderRequest(requestId: String, signature: String, buildProcedure: CodeWriter => Unit, extractProcedure: CodeWriter => Unit, addressed: Boolean, headers: Boolean, retType: String): CodeWriter => Unit
   def renderSubscriptionSignature(methodName: String, argList: Seq[String], addressed: Boolean, headers: Boolean, retType: String, eventType: String): String
@@ -77,7 +77,9 @@ trait JvmGenerator extends JvmRenderer {
 
     val serviceName = service.name
 
-    val code = serviceCode(map, servicePackage, serviceName, service.methods)
+    val uriName = service.options.uriPrefix.getOrElse(serviceName)
+
+    val code = serviceCode(map, servicePackage, serviceName, uriName, service.methods)
 
     val fileName = servicePackage.split('.').mkString("/") + "/" + serviceName + "." + fileExt
 
@@ -87,24 +89,26 @@ trait JvmGenerator extends JvmRenderer {
       .build()
   }
 
-  def serviceCode(map: Map[String, Message], servicePackage: String, serviceName: String, methods: Seq[Method]): String = {
+  def serviceCode(map: Map[String, Message], servicePackage: String, serviceName: String, uriName: String, methods: Seq[Method]): String = {
 
     val b = new StringBuilder
     val w = CodeWriter(tab, newLine, b)
 
-    val tuples = methods.map(methodCode(map, _))
+    val tuples = methods.map(methodCode(map, _, uriName))
 
     val descriptors = tuples.map(_._2)
 
     val (signatures, definitions) = tuples.flatMap(_._1).unzip
 
-    val procedure = renderServiceFile(servicePackage, serviceName, signatures, definitions, descriptors)
+    val methodNames = methods.map(_.name).map(toCamelCase)
+
+    val procedure = renderServiceFile(servicePackage, serviceName, methodNames, signatures, definitions, descriptors)
     procedure(w)
 
     b.toString()
   }
 
-  def methodCode(map: Map[String, Message], method: Method): (Seq[(String, CodeWriter => Unit)], CodeWriter => Unit) = {
+  def methodCode(map: Map[String, Message], method: Method, uriPrefix: String): (Seq[(String, CodeWriter => Unit)], CodeWriter => Unit) = {
 
     val (argList, buildProcedure) = interpretInput(map, method.inputType)
 
@@ -113,7 +117,12 @@ trait JvmGenerator extends JvmRenderer {
     val methodName = toCamelCase(method.name)
     val requestId = "\"" + method.inputType.protoName + "\""
 
-    val descriptor = renderRequestDescriptor(methodName, requestId, protoJvmType(method.inputType), protoJvmType(method.outputType))
+    val uriPath = Seq(uriPrefix, method.name)
+
+    val subscribable = method.subscription.nonEmpty
+    val addressRequired = method.addressing == CompilerExtensions.ServiceAddressing.ALWAYS
+
+    val descriptor = renderRequestDescriptor(methodName, requestId, uriPath, subscribable, addressRequired, protoJvmType(method.inputType), protoJvmType(method.outputType))
 
     val renderedMethods = method.subscription match {
       case None => {

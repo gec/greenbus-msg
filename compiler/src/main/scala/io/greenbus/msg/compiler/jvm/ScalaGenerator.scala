@@ -67,7 +67,7 @@ object ScalaGenerator extends JvmGenerator {
     }
   }
 
-  def renderServiceFile(servicePackage: String, serviceName: String, signatures: Seq[String], definitions: Seq[CodeWriter => Unit], descriptors: Seq[CodeWriter => Unit]): CodeWriter => Unit = {
+  def renderServiceFile(servicePackage: String, serviceName: String, methodNames: Seq[String], signatures: Seq[String], definitions: Seq[CodeWriter => Unit], descriptors: Seq[CodeWriter => Unit]): CodeWriter => Unit = {
     { implicit w: CodeWriter =>
       0 << s"package $servicePackage"
       0 << ""
@@ -101,18 +101,28 @@ object ScalaGenerator extends JvmGenerator {
       0 << ""
       1 << "object Descriptors {"
       descriptors.foreach { f => f(w.indented(2))}
+      0 << ""
+      2 << s"val all: Seq[RequestDescriptor[_, _]] = Seq(${methodNames.map(_.capitalize).mkString(", ")})"
+      0 << ""
       1 << "}"
       0 << ""
       0 <<  "}"
     }
   }
 
-  def renderRequestDescriptor(methodName: String, requestId: String, requestType: String, responseType: String): CodeWriter => Unit = {
+  def renderRequestDescriptor(methodName: String, requestId: String, uriPath: Seq[String], subscribable: Boolean, addressRequired: Boolean, requestType: String, responseType: String): CodeWriter => Unit = {
     { implicit w: CodeWriter =>
       0 << s"object ${methodName.capitalize} extends RequestDescriptor[$requestType, $responseType] {"
       1 << s"def requestId: String = $requestId"
+      1 << s"def uriPath: Seq[String] = Seq(${uriPath.map(s => "\"" + s + "\"").mkString(", ")})"
+      1 << s"def subscribable: Boolean = $subscribable"
+      1 << s"def addressRequired: Boolean = $addressRequired"
       1 << s"def decodeRequest(bytes: Array[Byte]): $requestType = $requestType.parseFrom(bytes)"
+      1 << s"def decodeResponse(bytes: Array[Byte]): $responseType = $responseType.parseFrom(bytes)"
+      1 << s"def encodeRequest(request: $requestType): Array[Byte] = request.toByteArray"
       1 << s"def encodeResponse(response: $responseType): Array[Byte] = response.toByteArray"
+      1 << s"def requestBuilder: com.google.protobuf.Message.Builder = $requestType.newBuilder"
+      1 << s"def responseBuilder: com.google.protobuf.Message.Builder = $responseType.newBuilder"
       0 <<  "}"
     }
   }

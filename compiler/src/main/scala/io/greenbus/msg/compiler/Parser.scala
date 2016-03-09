@@ -28,7 +28,7 @@ case class JavaFileInfo(javaPackage: String, javaClassName: String) {
   def fullName: String = javaPackage + "." + javaClassName
 }
 
-case class ServiceOptions(scalaPackage: Option[String], javaPackage: Option[String])
+case class ServiceOptions(scalaPackage: Option[String], javaPackage: Option[String], uriPrefix: Option[String])
 
 case class ProtoContext(protoPackage: String, fileName: String, targetInfo: TargetInfo)
 
@@ -134,7 +134,13 @@ object Parser {
         None
       }
 
-      val options = ServiceOptions(scalaPackage, javaPackage)
+      val uriPrefix = if (serviceDesc.getOptions.hasExtension(CompilerExtensions.uriPrefix)) {
+        Some(serviceDesc.getOptions.getExtension(CompilerExtensions.uriPrefix))
+      } else {
+        None
+      }
+
+      val options = ServiceOptions(scalaPackage, javaPackage, uriPrefix)
 
       ServiceTemp(name, methods, options, context)
     }

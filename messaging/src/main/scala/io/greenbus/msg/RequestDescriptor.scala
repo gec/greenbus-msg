@@ -18,9 +18,18 @@
  */
 package io.greenbus.msg
 
+import com.google.protobuf.Message
+
 trait RequestDescriptor[A, B] {
   def requestId: String
+  def uriPath: Seq[String]
+  def subscribable: Boolean
+  def addressRequired: Boolean
   def decodeRequest(bytes: Array[Byte]): A
+  def decodeResponse(bytes: Array[Byte]): B
+  def encodeRequest(response: A): Array[Byte]
   def encodeResponse(response: B): Array[Byte]
+  def requestBuilder: Message.Builder
+  def responseBuilder: Message.Builder
 }
 
