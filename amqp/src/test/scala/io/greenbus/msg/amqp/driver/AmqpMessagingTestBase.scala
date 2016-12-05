@@ -18,8 +18,7 @@
  */
 package io.greenbus.msg.amqp.driver
 
-import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FunSuite}
 import io.greenbus.msg.amqp.AmqpServiceOperations
 import io.greenbus.msg.service.ServiceHandler
 import scala.collection.mutable
@@ -28,7 +27,7 @@ import scala.concurrent.duration._
 import scala.concurrent.ExecutionContext.Implicits.global
 import java.util.concurrent.Executor
 
-abstract class AmqpMessagingTestBase extends FunSuite with ShouldMatchers {
+abstract class AmqpMessagingTestBase extends FunSuite with Matchers {
 
   implicit def stringToBytes(str: String): Array[Byte] = str.getBytes("UTF-8")
   implicit def bytesToString(bytes: Array[Byte]): String = new String(bytes, "UTF-8")

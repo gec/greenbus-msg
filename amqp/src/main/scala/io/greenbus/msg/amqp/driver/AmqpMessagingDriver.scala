@@ -20,7 +20,7 @@ package io.greenbus.msg.amqp.driver
 
 import java.util.UUID
 
-import com.typesafe.scalalogging.slf4j.Logging
+import com.typesafe.scalalogging.LazyLogging
 import io.greenbus.msg.Subscription
 import io.greenbus.msg.amqp.AmqpMessage
 import io.greenbus.msg.amqp.broker.AmqpOperations
@@ -36,7 +36,7 @@ object AmqpMessagingDriver {
   val directExchange = "amq.direct"
 }
 
-class AmqpMessagingDriver(ops: AmqpOperations, timeoutMs: Long, scheduler: Scheduler) extends MessagingDriver with Logging {
+class AmqpMessagingDriver(ops: AmqpOperations, timeoutMs: Long, scheduler: Scheduler) extends MessagingDriver with LazyLogging {
   import io.greenbus.msg.amqp.driver.AmqpMessagingDriver._
 
   private case class Record(promise: Promise[Array[Byte]], timer: Cancelable)

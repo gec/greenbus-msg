@@ -20,7 +20,7 @@ package io.greenbus.msg.qpid.broker
 
 import io.greenbus.msg.amqp.AmqpAddressedMessage
 import org.apache.qpid.transport._
-import com.typesafe.scalalogging.slf4j.Logging
+import com.typesafe.scalalogging.LazyLogging
 import scala.{ Option => ScalaOption }
 import java.io.IOException
 import io.greenbus.msg.SessionUnusableException
@@ -32,7 +32,7 @@ case class QpidDestination(exchange: String, key: String)
 /**
  * Helper methods for doing operations on qpid channels
  */
-object QpidChannelOperations extends Logging {
+object QpidChannelOperations extends LazyLogging {
 
   def subscribe(session: Session, queue: String): Unit = {
     rewrap("starting subscription on: " + queue) {

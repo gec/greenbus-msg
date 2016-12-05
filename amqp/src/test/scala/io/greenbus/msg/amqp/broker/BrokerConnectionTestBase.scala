@@ -19,12 +19,11 @@
 package io.greenbus.msg.amqp.broker
 
 import io.greenbus.msg.amqp.AmqpMessage
-import org.scalatest.FunSuite
-import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{Matchers, FunSuite}
 import io.greenbus.msg.amqp.util.SyncVar
 
 
-abstract class BrokerConnectionTestBase extends FunSuite with ShouldMatchers {
+abstract class BrokerConnectionTestBase extends FunSuite with Matchers {
 
   /**
    * should be implemented by a broker test suite package

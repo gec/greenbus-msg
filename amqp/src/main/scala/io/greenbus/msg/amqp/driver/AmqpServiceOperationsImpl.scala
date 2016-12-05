@@ -19,13 +19,13 @@
 package io.greenbus.msg.amqp.driver
 
 import io.greenbus.msg.{Subscription, SubscriptionBinding}
-import com.typesafe.scalalogging.slf4j.Logging
+import com.typesafe.scalalogging.LazyLogging
 import io.greenbus.msg.service.{ServiceHandlerSubscription, ServiceHandler}
 import io.greenbus.msg.amqp.broker.{AmqpSubscription, AmqpOperations}
 import io.greenbus.msg.amqp.{AmqpMessage, AmqpAddressedMessage, AmqpServiceOperations}
 
 
-class AmqpServiceOperationsImpl(ops: AmqpOperations) extends AmqpServiceOperations with Logging {
+class AmqpServiceOperationsImpl(ops: AmqpOperations) extends AmqpServiceOperations with LazyLogging {
 
 
   def bindCompetingService(handler: ServiceHandler, exchange: String): SubscriptionBinding = {

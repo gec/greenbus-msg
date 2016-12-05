@@ -19,12 +19,12 @@
 package io.greenbus.msg.qpid.broker
 
 import org.apache.qpid.transport.{Session, ConnectionException, ConnectionListener, Connection}
-import com.typesafe.scalalogging.slf4j.Logging
+import com.typesafe.scalalogging.LazyLogging
 import java.io.IOException
 import io.greenbus.msg.amqp.broker.{AmqpChannelOperations, AmqpOperations}
 
 
-class QpidConnectionManager(conn: Connection, ttlMilliseconds: Int) extends Logging {
+class QpidConnectionManager(conn: Connection, ttlMilliseconds: Int) extends LazyLogging {
 
   private val mutex = new Object
   private var isDisconnected = false

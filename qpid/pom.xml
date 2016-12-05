@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.greenbus.msg</groupId>
     <artifactId>greenbus-msg-qpid</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
 
     <parent>
         <groupId>io.greenbus.msg</groupId>
         <artifactId>greenbus-msg-scala-base</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
         <relativePath>../scala-base</relativePath>
     </parent>
 
@@ -55,19 +55,19 @@
         <dependency>
             <groupId>io.greenbus.msg</groupId>
             <artifactId>greenbus-msg-amqp</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.greenbus.msg</groupId>
             <artifactId>greenbus-msg-amqp</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.1.0-SNAPSHOT</version>
             <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.greenbus.msg</groupId>
             <artifactId>greenbus-msg-messaging</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>1.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.apache.qpid</groupId>

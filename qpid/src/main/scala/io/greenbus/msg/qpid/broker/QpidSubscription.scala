@@ -20,7 +20,7 @@ package io.greenbus.msg.qpid.broker
 
 import io.greenbus.msg.amqp.AmqpMessage
 import org.apache.qpid.transport.{MessageTransfer, SessionException, Session, SessionListener}
-import com.typesafe.scalalogging.slf4j.Logging
+import com.typesafe.scalalogging.LazyLogging
 import io.greenbus.msg.amqp.broker.AmqpSubscription
 
 
@@ -30,7 +30,7 @@ object QpidSubscription {
     new QpidSubscriptionImpl(session, detachSession, queueName)
   }
 
-  private class Listener(handler: AmqpMessage => Unit) extends SessionListener with Logging {
+  private class Listener(handler: AmqpMessage => Unit) extends SessionListener with LazyLogging {
 
     override def closed(s: Session) {
       logger.debug("Qpid session closed")
@@ -60,7 +60,7 @@ object QpidSubscription {
   }
 
 
-  class QpidSubscriptionImpl(session: Session, detachSession: Session => Unit, queueName: String) extends AmqpSubscription with Logging {
+  class QpidSubscriptionImpl(session: Session, detachSession: Session => Unit, queueName: String) extends AmqpSubscription with LazyLogging {
 
     def start(handler: AmqpMessage => Unit) {
       //if (!connection.isConnected()) throw new ServiceIOException("Connection closed")

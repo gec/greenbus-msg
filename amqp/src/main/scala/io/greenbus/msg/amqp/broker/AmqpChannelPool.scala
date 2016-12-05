@@ -19,11 +19,11 @@
 package io.greenbus.msg.amqp.broker
 
 import java.util.concurrent.ConcurrentLinkedQueue
+import com.typesafe.scalalogging.LazyLogging
 import io.greenbus.msg.SessionUnusableException
-import com.typesafe.scalalogging.slf4j.Logging
 import io.greenbus.msg.amqp.AmqpAddressedMessage
 
-class AmqpChannelPool(acquireChannel: () => AmqpChannelOperations) extends AmqpChannelOperations with Logging {
+class AmqpChannelPool(acquireChannel: () => AmqpChannelOperations) extends AmqpChannelOperations with LazyLogging {
 
   private val channels = new ConcurrentLinkedQueue[AmqpChannelOperations]()
 

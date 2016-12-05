@@ -19,14 +19,14 @@
 package io.greenbus.msg.qpid.impl
 
 import io.greenbus.msg.qpid.broker.QpidConnectionManager
-import com.typesafe.scalalogging.slf4j.Logging
+import com.typesafe.scalalogging.LazyLogging
 import io.greenbus.msg.{RequestMessagingCodec, Session}
 import io.greenbus.msg.amqp.{AmqpConnection, AmqpServiceOperations}
 import io.greenbus.msg.impl.{ConnectionListening, SessionMessagingImpl}
 import io.greenbus.msg.util.Scheduler
 import io.greenbus.msg.amqp.driver.{AmqpMessagingDriver, AmqpServiceOperationsImpl}
 
-class QpidConnectionImpl(mgr: QpidConnectionManager, timeoutMs: Long, scheduler: Scheduler) extends AmqpConnection with ConnectionListening with Logging {
+class QpidConnectionImpl(mgr: QpidConnectionManager, timeoutMs: Long, scheduler: Scheduler) extends AmqpConnection with ConnectionListening with LazyLogging {
 
   mgr.setOnDisconnect { expected =>
     notifyListeners(expected)

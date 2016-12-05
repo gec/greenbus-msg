@@ -22,11 +22,11 @@ package io.greenbus.msg.qpid.broker
 import io.greenbus.msg.amqp.AmqpAddressedMessage
 import org.apache.qpid.transport._
 
-import com.typesafe.scalalogging.slf4j.Logging
+import com.typesafe.scalalogging.LazyLogging
 import io.greenbus.msg.amqp.broker.AmqpChannelOperations
 
 object QpidWorkerChannel {
-  class LoggingSessionListener extends SessionListener with Logging {
+  class LoggingSessionListener extends SessionListener with LazyLogging {
     def closed(s: Session) {
       logger.debug("Qpid session closed")
     }
