@@ -6,28 +6,30 @@
     <groupId>io.greenbus.msg</groupId>
     <artifactId>greenbus-msg-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <scala.version>2.11.8</scala.version>
-        <scala.annotation>2.11</scala.annotation>
+        <scala.version>2.12.1</scala.version>
+        <scala.annotation>2.12</scala.annotation>
         <scala-maven-plugin.version>3.1.0</scala-maven-plugin.version>
         <slf4j-api.version>1.7.2</slf4j-api.version>
-        <scalalogging.version>3.4.0</scalalogging.version>
-        <scalatest.version>3.0.0</scalatest.version>
+        <scalalogging.version>3.5.0</scalalogging.version>
+        <scalatest.version>3.0.1</scalatest.version>
 
-        <akka.version>2.4.11</akka.version>
-        <playjson.version>2.5.9</playjson.version>
+        <akka.version>2.4.16</akka.version>
+        <playjson.version>2.6.0-M7</playjson.version>
 
         <scalariform-maven-plugin.version>0.1.0</scalariform-maven-plugin.version>
         <build-helper-maven-plugin.version>1.1</build-helper-maven-plugin.version>
         <maven-jar-plugin.version>2.2</maven-jar-plugin.version>
         <maven-license-plugin.version>1.9.0</maven-license-plugin.version>
         <maven-javadoc-plugin.version>2.8.1</maven-javadoc-plugin.version>
-        <protobuf-java.version>2.5.0</protobuf-java.version>
+        <protobuf-java.version>3.1.0</protobuf-java.version>
         <protobuf-java-format.version>1.2</protobuf-java-format.version>
         <maven-protoc-plugin.version>0.1.10</maven-protoc-plugin.version>
+        <!--<maven-protoc-plugin.version>0.1.11-SNAPSHOT</maven-protoc-plugin.version>-->
+
         <qpid.version>0.30</qpid.version>
         <main.basedir>../</main.basedir>
     </properties>
